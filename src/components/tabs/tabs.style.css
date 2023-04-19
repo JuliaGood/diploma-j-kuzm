@@ -1,0 +1,57 @@
+.tabs {
+  text-align: center;
+  color: #9f9f9f;
+  background-color: #121212;
+  box-shadow: -2px 2px 7px 0px #7f7f7f;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+}
+.tabs-container {
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.tabs ul {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* font-family: "TexGyreTermes"; */
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  font-size: 10px;
+}
+
+.tabs ul li {
+  padding: 15px 10px;
+  width: 25%;
+  text-decoration: none;
+  display: block;
+  list-style-type: disc;
+}
+
+.tabs ul li a {
+  align-items: center;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.tabs ul li:hover,
+.tabs ul li.active {
+  color: #e4e4e4;
+  background-color: #ffffff17;
+}
+
+.faIcon {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
