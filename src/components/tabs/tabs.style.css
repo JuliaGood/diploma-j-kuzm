@@ -43,7 +43,10 @@
   transition: all 0.3s;
 }
 
-.tabs ul li:hover,
+.tabs ul li:hover {
+  color: #e4e4e4;
+  background-color: #d7d7d731;
+}
 .tabs ul li.active {
   color: #e4e4e4;
   background-color: #ffffff17;
