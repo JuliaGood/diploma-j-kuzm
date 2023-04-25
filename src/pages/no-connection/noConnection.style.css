@@ -1,0 +1,29 @@
+.no-connection {
+  color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.no-connection-content {
+  /* margin: 0 auto; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-connection-content .fa-plug {
+  max-width: 100px;
+  height: auto;
+  color: #ff7800;
+}
+
+.no-connection-content p {
+  margin: 25px 10px;
+  color: #9f9f9f;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+}

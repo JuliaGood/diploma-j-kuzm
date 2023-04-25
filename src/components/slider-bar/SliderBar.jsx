@@ -8,6 +8,7 @@ const SliderBar = ({ onDimRangeChange, roomName, roomDimRange }) => {
       defaultValue={[roomDimRange]}
       min={0}
       max={100}
+      value={[roomDimRange]}
       step={1}
       aria-label="Volume"
       onValueChange={(value) => onDimRangeChange(roomName, value)}

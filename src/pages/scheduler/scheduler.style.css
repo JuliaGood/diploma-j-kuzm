@@ -1,0 +1,142 @@
+.scheduler {
+  color: white;
+  font-size: 20px;
+}
+.scheduler .scheduler-add {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  margin: 15px 0;
+  /* justify-content: flex-end; */
+}
+.scheduler .scheduler-add .scheduler-add-btn {
+  background-color: #ffffff27;
+  margin-left: auto;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.scheduler .scheduler-add .scheduler-add-btn:hover,
+.scheduler .scheduler-add .scheduler-add-btn:focus {
+  background-color: #d7d7d731;
+  box-shadow: rgb(165 164 164) 0px 0px 7px;  
+  cursor: pointer;
+}
+
+.scheduler .scheduler-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduler .scheduler-content-empty {
+  /* margin: 0 auto; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scheduler .scheduler-content-empty img, 
+.scheduler .scheduler-content-empty .fa-calendar {
+  /* max-width: 125px; */
+  max-width: 100px;
+  height: auto;
+}
+
+.scheduler .scheduler-content-empty p {
+  margin: 25px 10px;
+  color: #9f9f9f;
+  text-align: center;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+}
+
+.scheduler-table {
+  width: 100%;
+}
+
+.scheduler-table .table-header,
+.scheduler-table .table-row {
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.scheduler-table .table-header {
+  background-color: #17171799;
+  font-size: 12px;
+  padding: 15px 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.scheduler-table .table-row {
+  background-color: #ffffff27;
+  font-size: 16px;
+  padding: 20px 20px;
+  transition: all .3s ease-in-out;
+}
+.scheduler-table .table-row:hover,
+.scheduler-table .table-row:focus,
+.scheduler-table .table-row:active {
+  background-color: #ffffff37;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+.scheduler-table .col:not(:last-child) {
+  margin-right: 10px;
+}
+.scheduler-table .col-1 { /*room*/
+  flex-basis: 25%;
+}
+.scheduler-table .col-2 { /*status*/
+  flex-basis: 17%;
+}
+.scheduler-table .col-3 { /*bright*/
+  flex-basis: 17%;
+}
+.scheduler-table .col-4 { /*date*/
+  flex-basis: 24%;
+}
+.scheduler-table .col-5 { /*time*/
+  flex-basis: 12%;
+}
+.scheduler-table .col-6 { /*edit*/
+  flex-basis: 5%;
+  text-align: right;
+  transition: all .3s ease-in-out;
+}
+
+.scheduler-table .col-num {
+  font-size: 14px;
+}
+
+.scheduler-table .col-6 svg {
+  transition: all .3s ease-in-out;
+}
+
+.scheduler-table .col-6 svg:hover, 
+.scheduler-table .col-6 svg:focus, 
+.scheduler-table .col-6 svg:active {
+  transform: scale(1.03);
+  color: #ff9800;
+}
+
+
+@media screen and (max-width: 600px) {
+  .scheduler-table .table-header {
+    font-size: 10px;
+    padding: 15px 15px;
+  }
+  .scheduler-table .table-row {
+    font-size: 13px;
+    padding: 20px 15px;
+  }
+  .scheduler-table .col-num {
+    font-size: 12px;
+  }
+}

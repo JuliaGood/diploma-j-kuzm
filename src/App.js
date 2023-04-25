@@ -1,8 +1,12 @@
 import "./App.css";
-import tabsData from "./utils/navigation";
+import tabsData from "./utils/tabsData";
 import { useState } from "react";
+import Header from "./components/header/Header";
 import Tabs from "./components/tabs/Tabs";
-import Rooms from "./components/rooms/Rooms";
+import Rooms from "./pages/rooms/Rooms";
+import Scheduler from "./pages/scheduler/Scheduler";
+import History from "./pages/history/History";
+import NoConnection from "./pages/no-connection/NoConnection";
 
 const pages = {
   ROOMS: 1,
@@ -12,7 +16,7 @@ const pages = {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState(pages.ROOMS);
+  const [activeTab, setActiveTab] = useState(pages.HISTORY);
 
   const onTabClick = (pageId) => {
     console.log("tab click", pageId);
@@ -24,16 +28,19 @@ function App() {
       case pages.ROOMS: 
         return <Rooms />;
       case pages.SCHEDULER: 
-        return <div>SCHEDULER page</div>;
+        return <Scheduler />;
       case pages.HISTORY: 
-        return <div>HISTORY page</div>;
+        return <History />;
       case pages.STATS: 
-        return <div>STATS page</div>;
+        return  <NoConnection />;
+      default:
+        return <NoConnection />;
     }
   }
 
   return (
     <div className="App">
+      <Header />
       <div className="container">
        {pageSwitcher()}
       </div>

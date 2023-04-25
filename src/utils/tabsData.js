@@ -1,8 +1,8 @@
 import { faHome, faCalendar, faHistory, faBarChart } from '@fortawesome/free-solid-svg-icons'
 
-const navigation = [
+const tabsData = [
   {
-    name: "Rooms", /*Home page*/
+    name: "Rooms",
     url: "/",
     pageId: 1,
     iconName: faHome
@@ -11,7 +11,7 @@ const navigation = [
     name: "Sheduler",
     url: "/sheduler",
     pageId: 2,
-    iconName: faCalendar /* faCalendarO */
+    iconName: faCalendar 
   },
   {
     name: "History",
@@ -20,11 +20,11 @@ const navigation = [
     iconName: faHistory
   },
   {
-    name: "Stats", /*Statistics*/
+    name: "Stats",
     url: "/stats",
     pageId: 4,
     iconName: faBarChart
   }
 ];
 
-export default navigation;
+export default tabsData;

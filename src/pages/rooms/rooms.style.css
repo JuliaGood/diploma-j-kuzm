@@ -1,0 +1,38 @@
+.rooms {
+}
+.room {
+  background-color: #ffffff27;
+  color: white;
+  display: flex;
+  flex-flow: column;
+  margin: 15px 0;
+  padding: 15px 20px;
+  border-radius: 10px;
+}
+
+.room-status {
+  display: flex;
+}
+
+.fa-lightbulb {
+  color: #ff7800;
+  margin-right: 10px;
+  font-size: 22px;
+  transition: color .3s ease-in-out;
+}
+
+.room-name {
+  font-size: 16px;
+}
+
+.room-switch {
+  margin-left: auto;
+}
+
+.room-dim .room-dim-percent {
+  font-size: 14px;
+}
+
+.room-dim .room-sliderbar {
+  
+}

@@ -32,27 +32,65 @@
   width: 25%;
   text-decoration: none;
   display: block;
-  list-style-type: disc;
+  list-style-type: none;
+  transition: all .3s linear;
+  position: relative;
 }
 
-.tabs ul li a {
-  align-items: center;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.3s;
+.tabs ul li::before, .tabs ul li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 0%;
+  height: 100%;
+  transition: all .3s linear;
+}
+
+.tabs ul li::before {
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.tabs ul li::after {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tabs ul li:hover {
   color: #e4e4e4;
-  background-color: #d7d7d731;
+  cursor: pointer;
 }
-.tabs ul li.active {
-  color: #e4e4e4;
+
+.tabs ul li:not(.active):hover::before, 
+.tabs ul li:not(.active):hover::after {
+  width: 100%;
+  background-color: #38383869;
+}
+.tabs ul li.active::after,
+.tabs ul li.active::before {
+  width: 100%;
   background-color: #ffffff17;
 }
 
-.faIcon {
+/* @media (max-width: 767px), (pointer: coarse) {
+  .tabs ul li:not(.active):hover::before, 
+  .tabs ul li:not(.active):hover::after {
+    background-color: none !important;
+  }
+} */
+
+.tabs .tab-content {
+  position: relative;
+  z-index: 1;
+}
+
+.tabs .tab-content span {
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tabs .tab-content .fa-icon {
   display: block;
   margin: 0 auto;
   margin-bottom: 5px;

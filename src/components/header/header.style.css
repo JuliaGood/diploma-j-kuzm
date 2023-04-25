@@ -1,0 +1,17 @@
+.header {
+  color: #9f9f9f;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform:uppercase;
+  font-size: 18px;
+  height: 80px;
+  box-shadow: -1px -1px 7px 0px #7f7f7f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fa-bolt {
+  color: #ff7800;
+  font-size: 20px;
+}

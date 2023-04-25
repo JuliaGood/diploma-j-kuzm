@@ -1,0 +1,20 @@
+{
+  "rooms": [
+    {
+      "roomName": "Kitchen",
+      "roomId": 1
+    },
+    {
+      "roomName": "Living room",
+      "roomId": 2
+    },
+    {
+      "roomName": "Bathroom",
+      "roomId": 3
+    },
+    {
+      "roomName": "Bedroom",
+      "roomId": 4
+    }
+  ]
+}
