@@ -8,8 +8,13 @@
   max-width: 700px;
   margin: 0 auto;
 }
+
 @media screen and (max-width: 600px) {
   .container {
     padding: 0 10px 60px;
   }
+}
+
+button {
+  all: unset;
 }

@@ -1,0 +1,8 @@
+{
+  "rooms": [
+    { "roomId": 1, "roomName": "Kitchen" },
+    { "roomId": 2, "roomName": "Living room" },
+    { "roomId": 3, "roomName": "Bedroom" },
+    { "roomId": 4, "roomName": "Bathroom" }
+  ]
+}

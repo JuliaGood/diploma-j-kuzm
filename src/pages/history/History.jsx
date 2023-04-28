@@ -1,62 +1,94 @@
 import "./history.style.css";
 import { useEffect, useState } from "react";
-import * as ScrollArea from '@radix-ui/react-scroll-area';
-import * as Checkbox from '@radix-ui/react-checkbox';
-import { CheckIcon } from '@radix-ui/react-icons';
+import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTable } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faAngleDown, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import Button from "../../components/button/Button";
+import FilterRoomDropdown from "../../components/filter-room-dropdown/FilterRoomDropdown";
+import FieldGroup from "../../components/field-group/FieldGroup";
+import CustomDatePicker from "../../components/custom-date-picker/CustomDatePicker";
+import FieldGroups from "../../components/field-groups/FieldGroups";
+import ApiUrls from '../../ApiUrls';
 
 const History = () => {
-
   const [history, setHistory] = useState([]);
-  const [selectedRooms, setSelectedRooms] = useState({}); // { roomId: boolean}
-  const [filters, setFilters] = useState({rooms: []});
+  const [selectedRooms, setSelectedRooms] = useState([]); // { roomId: boolean}
+  const [selectedFromDate, setSelectedFromDate] = useState(null); // date
+  const [selectedToDate, setSelectedToDate] = useState(null); // date
+  const [filters, setFilters] = useState({
+    rooms: [],
+    fromDate: null,
+    toDate: null
+  }); // roomFilters for now
   const [isRoomFilterOpen, setRoomFilterOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/placeholders/history-data.json')
+    fetch(ApiUrls.history.getHistory)
       .then(res => res.json())
       .then(history => setHistory(history))
   }, []);
 
   useEffect(() => {
-    fetch('/placeholders/history-filters.json')
+    fetch(ApiUrls.history.getHistoryFilters)
       .then(res => res.json())
-      .then(filters => setFilters(filters))
+      .then(filters => {
+        setFilters(filters);
+        setSelectedRooms(filters.rooms.map((room) => room.roomId));
+        setSelectedFromDate(new Date(filters.fromDate));
+        setSelectedToDate(new Date(filters.toDate));
+      });
   }, []);
 
   const onRoomFilterCheck = (roomId) => {
-    setSelectedRooms((currState) => {
-      return {...currState, [roomId]: !currState[roomId]}
+    if (findSelectedRoom(roomId)) {
+      const filteredSelectedRooms = selectedRooms.filter((selectedRoomId) => {
+        return selectedRoomId !== roomId;
+      });
+
+      if (selectedRooms.length <= 1) {
+        return;
+      }
+
+      setSelectedRooms(filteredSelectedRooms);
+    } else {
+      setSelectedRooms([...selectedRooms, roomId]);
+    }
+  }
+
+  const findSelectedRoom = (roomId) => {
+    return selectedRooms.find((selectedRoomId) => {
+      return selectedRoomId === roomId;
     });
-    console.log(selectedRooms);
+  }
+
+  const isRoomSelected = (roomId) => {
+    return findSelectedRoom(roomId) !== undefined;
+  }
+
+  const onFilterApplyClick = () => {
+    const selectedFilters = {
+      rooms: selectedRooms,
+      fromDate: selectedFromDate,
+      toDate: selectedToDate
+    }
+
+    console.log("Request to backend", selectedFilters);
   }
 
   const displaySelectedRooms = () => {
-    // for (const [key, value] of Object.entries(object1)) {
-    //   console.log(`${key}: ${value}`);
-    // }
-
-    // const selectedRoomIds = Object.keys(selectedRooms).filter((roomId) => {
-    //   return selectedRooms[roomId];
-    // });
-
     const selectedRoomNames = filters.rooms.filter((room) => {
-      return selectedRooms[room.roomId];
+      return findSelectedRoom(room.roomId);
     })
-    .map((room) => {
-      return room.roomName;
-    })
-    .join(", ")
-    
-    console.log("rooms in displaySelectedRooms", selectedRoomNames);
+      .map((room) => {
+        return room.roomName;
+      })
+      .join(", ")
+
     return selectedRoomNames;
   }
 
-
   return (
     <div className="history">
-
       <div className="history-content">
 
         {/* <div className="history-content-empty">
@@ -65,68 +97,51 @@ const History = () => {
         </div> */}
 
         <div className="history-content-full">
-
-          <div className="history-filters">
-            <div className="filter ">
-              <label>Room</label>
-              <input 
-                type="text" 
-                onClick={() => setRoomFilterOpen(true)}
-                defaultValue={displaySelectedRooms()}
-              />
-
-              { isRoomFilterOpen &&
-              <>
-              <ScrollArea.Root className="ScrollAreaRoot">
-                <ScrollArea.Viewport className="ScrollAreaViewport">
-                  <div style={{ padding: '15px 20px' }}>
-                    <div className="Text">rooms</div>
-                    {filters.rooms && filters.rooms.map((room) => (
-                      <div className="Tag" key={room.roomId}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <Checkbox.Root 
-                            className="CheckboxRoot" 
-                            checked={selectedRooms[room.roomId]}
-                            onClick={() => onRoomFilterCheck(room.roomId)}
-                          >
-                            <Checkbox.Indicator className="CheckboxIndicator">
-                              <CheckIcon />
-                            </Checkbox.Indicator>
-                          </Checkbox.Root>
-                          <label className="Label" htmlFor="c1">
-                            {room.roomName}
-                          </label>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea.Viewport>
-                <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical">
-                  <ScrollArea.Thumb className="ScrollAreaThumb" />
-                </ScrollArea.Scrollbar>
-                <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal">
-                  <ScrollArea.Thumb className="ScrollAreaThumb" />
-                </ScrollArea.Scrollbar>
-                <ScrollArea.Corner className="ScrollAreaCorner" />
-              </ScrollArea.Root>
-                <button 
-                  className="ok-btn" 
-                  onClick={() => setRoomFilterOpen(false)}
-                >Ok</button>
-              </>
+          <FieldGroups>
+            <FieldGroup fieldName="Room">
+              <div className="input">
+                <FontAwesomeIcon icon={faHome} className="fa-input-icon" />
+                <input
+                  type="text"
+                  readOnly
+                  onClick={() => setRoomFilterOpen(true)}
+                  defaultValue={displaySelectedRooms()}
+                />
+                <FontAwesomeIcon icon={faAngleDown} className="fa-input-arrow" />
+              </div>
+              {isRoomFilterOpen &&
+                <FilterRoomDropdown
+                  rooms={filters.rooms}
+                  isRoomSelected={isRoomSelected}
+                  onRoomFilterCheck={onRoomFilterCheck}
+                  setRoomFilterOpen={() => setRoomFilterOpen(false)}
+                />
               }
+            </FieldGroup>
 
-            </div>
+            <FieldGroup fieldName="From date">
+              <div className="input" >
+                <CustomDatePicker
+                  selectedDate={selectedFromDate}
+                  onDateChange={(date) => setSelectedFromDate(date)}
+                />
+              </div>
+            </FieldGroup>
 
-            <div className="filter ">
-              <label>From date</label>
-              <input type="text" />
-            </div>
-            <div className="filter ">
-              <label>To date</label>
-              <input type="text" />
-            </div>
-          </div>
+            <FieldGroup fieldName="To date">
+              <div className="input">
+                <CustomDatePicker
+                  selectedDate={selectedToDate}
+                  onDateChange={(date) => setSelectedToDate(date)}
+                />
+              </div>
+            </FieldGroup>
+
+            <Button
+              onButtonClick={() => onFilterApplyClick()}
+              buttonName="apply"
+            />
+          </FieldGroups>
 
           <div className="history-table">
             <div className="table-header">
@@ -136,7 +151,6 @@ const History = () => {
               <div className="col col-4">Date</div>
               <div className="col col-5">Time</div>
             </div>
-
 
             {history.map((historyRoom) => {
               return (

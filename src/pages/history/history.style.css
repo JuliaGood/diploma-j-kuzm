@@ -1,8 +1,3 @@
-.history {
-  color: white;
-  font-size: 20px;
-}
-
 .history .history-content {
   display: flex;
   flex-direction: column;
@@ -30,22 +25,6 @@
   letter-spacing: 0.1em;
   font-size: 16px;
 }
-.history .history-filters {
-  display: flex;
-  padding: 15px 20px 35px;
-  justify-content: space-between;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-}
-.history .history-filters label {
-  display: block;
-}
-.history .history-filters input {
-  background-color: #ffffff27;
-  border: none;
-  border-radius: 3px;
-  padding: 5px;
-}
 
 .history-table {
   width: 100%;
@@ -53,6 +32,7 @@
 
 .history-table .table-header,
 .history-table .table-row {
+  color: white;
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -101,8 +81,6 @@
   font-size: 14px;
 }
 
-
-
 @media screen and (max-width: 600px) {
   .history-table .table-header {
     font-size: 10px;
@@ -115,110 +93,4 @@
   .history-table .col-num {
     font-size: 12px;
   }
-}
-
-
-.ScrollAreaRoot {
-  width: 200px;
-  height: 225px;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: rgb(165 164 164) 0px 0px 7px;
-  background-color: white;
-  --scrollbar-size: 10px;
-}
-
-.ScrollAreaViewport {
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-}
-
-.ScrollAreaScrollbar {
-  display: flex;
-  /* ensures no selection */
-  user-select: none;
-  /* disable browser handling of all panning and zooming gestures on touch devices */
-  touch-action: none;
-  padding: 2px;
-  background: gray;
-  transition: background 160ms ease-out;
-}
-.ScrollAreaScrollbar:hover {
-  background: darkblue;
-}
-.ScrollAreaScrollbar[data-orientation='vertical'] {
-  width: 3px;
-}
-.ScrollAreaScrollbar[data-orientation='horizontal'] {
-  flex-direction: column;
-  height: 3px;
-}
-
-.ScrollAreaThumb {
-  flex: 1;
-  background: red;
-  border-radius: 3px;
-  position: relative;
-}
-/* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
-.ScrollAreaThumb::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  min-width: 44px;
-  min-height: 44px;
-}
-
-.ScrollAreaCorner {
-  background: green;
-}
-
-.Text {
-  color: gray;
-  font-size: 15px;
-  line-height: 18px;
-  font-weight: 500;
-}
-
-.Tag {
-  color: gray;
-  font-size: 13px;
-  line-height: 18px;
-  margin-top: 10px;
-  border-top: 1px solid pink;
-  padding-top: 10px;
-}
-
-
-.CheckboxRoot {
-  background-color: white;
-  width: 25px;
-  height: 25px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: rgb(165 164 164) 0px 0px 7px;
-}
-.CheckboxRoot:hover {
-  background-color: blue;
-}
-.CheckboxRoot:focus {
-  box-shadow: 0 0 0 2px black;
-}
-
-.CheckboxIndicator {
-  color: violet;
-}
-
-.Label {
-  /* color: gray; */
-  padding-left: 15px;
-  font-size: 15px;
-  line-height: 1;
 }

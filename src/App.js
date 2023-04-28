@@ -16,10 +16,9 @@ const pages = {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState(pages.HISTORY);
+  const [activeTab, setActiveTab] = useState(pages.SCHEDULER);
 
   const onTabClick = (pageId) => {
-    console.log("tab click", pageId);
     setActiveTab(pageId);
   } 
 

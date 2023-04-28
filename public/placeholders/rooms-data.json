@@ -2,21 +2,21 @@
   {
     "name": "Kitchen", 
     "isOn": true,
-    "dimRange": 100
+    "brightRange": 100
   },
   {
     "name": "Living Room", 
     "isOn": false,
-    "dimRange": 75
+    "brightRange": 75
   },
   {
     "name": "Bathroom", 
     "isOn": true,
-    "dimRange": 30
+    "brightRange": 30
   },
   {
     "name": "Bedroom", 
     "isOn": false,
-    "dimRange": 50
+    "brightRange": 50
   }
 ]

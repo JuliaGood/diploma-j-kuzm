@@ -2,21 +2,20 @@ import "./rooms.style.css";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
-import Switch from "../../components/switch/Switch";
-import SliderBar from "../../components/slider-bar/SliderBar";
+import CustomSwitch from "../../components/custom-switch/CustomSwitch";
+import CustomSlider from "../../components/custom-slider/CustomSlider";
+import ApiUrls from '../../ApiUrls';
 
 const MIN_BRIGHT_RANGE = 5;
 
 function Rooms() {
   const [rooms, setRooms] = useState([]);
 
-  const onDimRangeChange = (roomName, value) => {
-    console.log("onDimRangeChange", roomName, value);
-
-    const updatedDimRange = value >= MIN_BRIGHT_RANGE ? value : MIN_BRIGHT_RANGE;
+  const onBrightRangeChange = (roomName, value) => {
+    const updatedBrightRange = value >= MIN_BRIGHT_RANGE ? value : MIN_BRIGHT_RANGE;
     const currentRooms = rooms.map((room) => {
       if (room.name === roomName) {
-        room.dimRange = updatedDimRange;
+        room.brightRange = updatedBrightRange;
       }
       return room;
     });
@@ -48,7 +47,7 @@ function Rooms() {
   }
 
   useEffect(() => {
-    fetch('/placeholders/rooms-data.json')
+    fetch(ApiUrls.rooms.getRooms)
     .then(res => res.json())
     .then(rooms => setRooms(rooms))  
     .catch(console.log);
@@ -67,24 +66,21 @@ function Rooms() {
               />
               <span className="room-name">{room.name}</span>
               <div className="room-switch">
-                <Switch 
-                  onRoomStatusChange={onRoomStatusChange}
-                  roomName={room.name}
-                  roomStatus={room.isOn}
+                <CustomSwitch 
+                  onSwitchStatusChange={(value) => onRoomStatusChange(room.name, value)}
+                  switchStatus={room.isOn}
                 />
               </div>
             </div>
 
             <div className="room-dim">
               <div className="room-sliderbar">
-                <SliderBar 
-                  onDimRangeChange={onDimRangeChange} 
-                  roomName={room.name}
-                  roomDimRange={room.dimRange}
-
+                <CustomSlider 
+                  onSliderChange={(value) => onBrightRangeChange(room.name, value)} 
+                  brightRange={room.brightRange}
                 />
               </div>
-              <p className="room-dim-percent">{room.dimRange}%</p>
+              <p className="room-dim-percent">{room.brightRange}%</p>
             </div>         
             
           </div>

@@ -1,0 +1,13 @@
+.modal-scheduler {
+  /* padding-top: 60px; */
+}
+
+.modal-scheduler-title {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: white;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+}
+

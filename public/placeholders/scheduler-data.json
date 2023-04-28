@@ -5,7 +5,7 @@
     "bright": 70,
     "date": "18.05.2023",
     "time": "17:00",
-    "uuid": "123"
+    "scheduledId": "123"
   },
   {
     "roomName": "Living room", 
@@ -13,7 +13,7 @@
     "bright": 100,
     "date": "09.08.2023",
     "time": "19:00",
-    "uuid": "234"
+    "scheduledId": "234"
   },
   {
     "roomName": "Bathroom", 
@@ -21,7 +21,7 @@
     "bright": 30,
     "date": "25.06.2023",
     "time": "06:00",
-    "uuid": "345"
+    "scheduledId": "345"
   },
   {
     "roomName": "Bedroom", 
@@ -29,6 +29,6 @@
     "bright": 10,
     "date": "13.08.2023",
     "time": "11:00",
-    "uuid": "456"
+    "scheduledId": "456"
   }
 ]

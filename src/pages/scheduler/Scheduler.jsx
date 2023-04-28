@@ -1,23 +1,28 @@
 import "./scheduler.style.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPencil, faCalendar } from '@fortawesome/free-solid-svg-icons';
-import calendarImg from "../../assets/calendar2.png";
+import ModalScheduler from "../../components/modal-scheduler/ModalScheduler";
+import ApiUrls from '../../ApiUrls';
 
 const Scheduler = () => {
 
   const [scheduler, setScheduler] = useState([]);
+  const modalScheduler = useRef();
 
   useEffect(() => {
-    fetch('/placeholders/scheduler-data.json')
+    fetch(ApiUrls.scheduler.getScheduler)
       .then(res => res.json())
       .then(scheduler => setScheduler(scheduler))
   }, []);
-
+ 
   return (
     <div className="scheduler">
       <div className="scheduler-add">
-        <div className="scheduler-add-btn">
+        <div 
+          className="scheduler-add-btn"
+          onClick={() => modalScheduler.current.openAddModal()}
+        >
           <FontAwesomeIcon icon={faPlus} className="fa-plus" />
         </div>
       </div>
@@ -41,10 +46,13 @@ const Scheduler = () => {
               <div className="col col-6"></div>
             </div>
 
-
             {scheduler.map((scheduledRoom) => {
               return (
-                <div className="table-row" key={scheduledRoom.uuid}>
+                <div 
+                  className="table-row" 
+                  key={scheduledRoom.scheduledId}
+                  onClick={() => modalScheduler.current.openEditModal(scheduledRoom.scheduledId)}
+                >
                   <div className="col col-1">{scheduledRoom.roomName}</div>
                   <div className="col col-2">{scheduledRoom.status}</div>
                   <div className="col col-3 col-num">{scheduledRoom.bright}%</div>
@@ -56,9 +64,10 @@ const Scheduler = () => {
             })}
 
           </div>
-
         </div>
       </div>
+
+      <ModalScheduler ref={modalScheduler}/>
 
     </div>
   )

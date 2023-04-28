@@ -71,12 +71,8 @@
   width: 100%;
   background-color: #ffffff17;
 }
-
-/* @media (max-width: 767px), (pointer: coarse) {
-  .tabs ul li:not(.active):hover::before, 
-  .tabs ul li:not(.active):hover::after {
-    background-color: none !important;
-  }
+/* .tabs ul li.active .fa-icon {
+  color: #ff7800;
 } */
 
 .tabs .tab-content {
@@ -95,4 +91,5 @@
   margin: 0 auto;
   margin-bottom: 5px;
   font-size: 12px;
+
 }

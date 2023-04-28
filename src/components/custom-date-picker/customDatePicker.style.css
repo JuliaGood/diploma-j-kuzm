@@ -1,0 +1,27 @@
+.react-datepicker-popper {
+  width: 100%;
+  box-shadow: rgb(165 164 164) 0px 0px 7px;
+  background-color: white;
+  border-radius: 4px;
+  padding-top: 0!important;
+  position:relative!important;
+  inset: 0!important;
+  transform: none!important;
+}
+
+.react-datepicker-popper .react-datepicker {
+  display: flex;
+}
+
+.react-datepicker__tab-loop {
+  width: 100%;
+  position: absolute;  
+  left: 0;
+  right: 0;
+  top: 68px;
+  z-index: 10;
+}
+
+.react-datepicker__month-container {
+  width: 100%;
+}

@@ -1,0 +1,6 @@
+.field-groups {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0 35px;
+  justify-content: space-between;
+}
