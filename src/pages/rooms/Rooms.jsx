@@ -47,7 +47,7 @@ function Rooms() {
   }
 
   useEffect(() => {
-    fetch(ApiUrls.rooms.getRooms)
+    fetch(ApiUrls.rooms.getHomeRooms)
     .then(res => res.json())
     .then(rooms => setRooms(rooms))  
     .catch(console.log);
@@ -62,7 +62,7 @@ function Rooms() {
               <FontAwesomeIcon 
                 icon={faLightbulb} 
                 className="fa-lightbulb" 
-                style={adjustIconColorBrightness(room.dimRange)}
+                style={adjustIconColorBrightness(room.brightRange)}
               />
               <span className="room-name">{room.name}</span>
               <div className="room-switch">
@@ -73,14 +73,14 @@ function Rooms() {
               </div>
             </div>
 
-            <div className="room-dim">
-              <div className="room-sliderbar">
+            <div className="room-bright">
+              <div className="room-slider">
                 <CustomSlider 
                   onSliderChange={(value) => onBrightRangeChange(room.name, value)} 
                   brightRange={room.brightRange}
                 />
               </div>
-              <p className="room-dim-percent">{room.brightRange}%</p>
+              <p className="room-bright-percent">{room.brightRange}%</p>
             </div>         
             
           </div>

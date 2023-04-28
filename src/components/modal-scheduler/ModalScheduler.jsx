@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Modal from "../modal/Modal";
 import "./modalScheduler.style.css";
 import FieldGroup from "../field-group/FieldGroup";
 import FieldGroups from "../field-groups/FieldGroups";
@@ -14,7 +13,6 @@ class ModalScheduler extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalOpen: true,
       scheduledRoom: {
         roomId: null,
         scheduledTime: null,
@@ -23,37 +21,7 @@ class ModalScheduler extends Component {
       },
       roomOptions: [],
       hasScheduledTimeError: false,
-      scheduledId: null
-    }
-  }
-
-  openAddModal = () => {
-    this.setState({ isModalOpen: true })
-  }
-
-  openEditModal = (scheduledId) => {
-    // fetch(`${ApiUrls.scheduler.getExistedScheduler}/${scheduledId}`)
-    fetch(ApiUrls.scheduler.getExistedScheduler)
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({
-          scheduledRoom: {
-            roomId: data.roomId,
-            scheduledTime: new Date(data.scheduledTime),
-            lightStatus: data.lightStatus,
-            brightRange: data.brightRange
-          }
-        })
-      })
-
-    this.setState({
-      isModalOpen: true,
-      scheduledId: scheduledId
-    })
-  }
-
-  closeModal = () => {
-    this.setState({ isModalOpen: false })
+    };
   }
 
   onRoomSelectChange = ({ value }) => {
@@ -112,7 +80,7 @@ class ModalScheduler extends Component {
       brightRange: brightRange
     }
 
-    if (this.state.scheduledId) {
+    if (this.props.scheduledId) {
       // PUT requesr //api/scheduler/scheduledId
     } else {
       // POST request /api/scheduler
@@ -121,34 +89,60 @@ class ModalScheduler extends Component {
 
 
     console.log('request', request);
-    this.setState({ hasScheduledTimeError: false })
+    this.setState({ hasScheduledTimeError: false });
+    //this.props.closeModalScheduler();
+  }
+
+  getExistingScheduler() {
+    if (!this.props.scheduledId) {
+      return;
+    }
+    
+    // fetch(`${ApiUrls.scheduler.getExistedScheduler}/${this.props.scheduledId}`)
+    fetch(ApiUrls.scheduler.getExistedScheduler)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({
+          scheduledRoom: {
+            roomId: data.roomId,
+            scheduledTime: new Date(data.scheduledTime),
+            lightStatus: data.lightStatus,
+            brightRange: data.brightRange
+          }
+        })
+      });
+  }
+
+  getRooms() {
+    fetch(ApiUrls.scheduler.getRooms)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.rooms.length === 0) {
+        return;
+      }
+
+      const roomOptions = data.rooms.map((room) => {
+        return {
+          value: room.roomId,
+          label: room.roomName
+        };
+      });
+
+      this.setState({ roomOptions: roomOptions }, () => {
+        this.setState((prevState) => {
+          return {
+            ...prevState, scheduledRoom: {
+              ...prevState.scheduledRoom, roomId: roomOptions[0].value
+            }
+          };
+        });
+      });
+    });
   }
 
   componentDidMount() {
-    fetch(ApiUrls.scheduler.getRooms)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.rooms.length === 0) {
-          return;
-        }
-
-        const roomOptions = data.rooms.map((room) => {
-          return {
-            value: room.roomId,
-            label: room.roomName
-          };
-        });
-
-        this.setState({ roomOptions: roomOptions }, () => {
-          this.setState((prevState) => {
-            return {
-              ...prevState, scheduledRoom: {
-                ...prevState.scheduledRoom, roomId: roomOptions[0].value
-              }
-            };
-          });
-        });
-      });
+    this.getRooms();
+    this.getExistingScheduler();
   }
 
   componentDidUpdate() {
@@ -165,62 +159,55 @@ class ModalScheduler extends Component {
     const { roomId, scheduledTime, lightStatus, brightRange } = this.state.scheduledRoom;
 
     return (
-      <>
-        {this.state.isModalOpen &&
-          <Modal closeModal={this.closeModal}>
-            <div className="modal-scheduler">
-              <div className="modal-scheduler-title">Schedule your time!</div>
+      <div className="modal-scheduler">
+        <div className="modal-scheduler-title">Schedule your time!</div>
 
-              <FieldGroups>
-                <FieldGroup fieldName="Select Room">
-                  <div className="select">
-                    <CustomSelect
-                      onSelectChange={this.onRoomSelectChange}
-                      options={this.state.roomOptions}
-                      selectedValue={this.findSelectedRoomOption(roomId)}
-                    />
-                  </div>
-                </FieldGroup>
-
-                <FieldGroup fieldName="Select Time">
-                  <div className={`input ${this.state.hasScheduledTimeError ? "input-error" : ""}`}>
-                    <CustomDatePicker
-                      defaultValue="Pick time"
-                      selectedDate={scheduledTime}
-                      onDateChange={(date) => this.onScheduledTimeChange(date)}
-                    />
-                  </div>
-                </FieldGroup>
-
-                <FieldGroup fieldName="Light Status">
-                  <div className="switch">
-                    <CustomSwitch
-                      onSwitchStatusChange={this.onRoomStatusChange}
-                      switchStatus={lightStatus}
-                    />
-                  </div>
-                </FieldGroup>
-
-                <FieldGroup fieldName="Light Brightness">
-                  <div className="slider">
-                    <CustomSlider
-                      onSliderChange={this.onBrightRangeChange}
-                      brightRange={brightRange}
-                    />
-                  </div>
-                  <p className="bright-range-percent">{brightRange}%</p>
-                </FieldGroup>
-
-                <Button
-                  buttonName="Save"
-                  onButtonClick={() => this.onSaveClick()}
-                />
-              </FieldGroups>
-
+        <FieldGroups>
+          <FieldGroup fieldName="Select Room">
+            <div className="select">
+              <CustomSelect
+                onSelectChange={this.onRoomSelectChange}
+                options={this.state.roomOptions}
+                selectedValue={this.findSelectedRoomOption(roomId)}
+              />
             </div>
-          </Modal>
-        }
-      </>
+          </FieldGroup>
+
+          <FieldGroup fieldName="Select Time">
+            <div className={`input ${this.state.hasScheduledTimeError ? "input-error" : ""}`}>
+              <CustomDatePicker
+                defaultValue="Pick time"
+                selectedDate={scheduledTime}
+                onDateChange={(date) => this.onScheduledTimeChange(date)}
+              />
+            </div>
+          </FieldGroup>
+
+          <FieldGroup fieldName="Light Status">
+            <div className="switch">
+              <CustomSwitch
+                onSwitchStatusChange={this.onRoomStatusChange}
+                switchStatus={lightStatus}
+              />
+            </div>
+          </FieldGroup>
+
+          <FieldGroup fieldName="Light Brightness">
+            <div className="slider">
+              <CustomSlider
+                onSliderChange={this.onBrightRangeChange}
+                brightRange={brightRange}
+              />
+            </div>
+            <p className="bright-range-percent">{brightRange}%</p>
+          </FieldGroup>
+
+          <Button
+            buttonName="Save"
+            onButtonClick={() => this.onSaveClick()}
+          />
+        </FieldGroups>
+      </div>
     );
   }
 }

@@ -4,24 +4,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPencil, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import ModalScheduler from "../../components/modal-scheduler/ModalScheduler";
 import ApiUrls from '../../ApiUrls';
+import ModalBase from "../../components/modal-base/ModalBase";
 
 const Scheduler = () => {
-
-  const [scheduler, setScheduler] = useState([]);
-  const modalScheduler = useRef();
+  const [scheduler, setScheduler] = useState([]); // get scheduler data for table 
+  const [editScheduledId, setEditScheduledId] = useState(null); // for edit btn
+  const modalAddScheduler = useRef();
+  const modalEditScheduler = useRef();
 
   useEffect(() => {
     fetch(ApiUrls.scheduler.getScheduler)
       .then(res => res.json())
       .then(scheduler => setScheduler(scheduler))
   }, []);
- 
+
+  const openAddSchedulerModal = () => {
+    modalAddScheduler.current.openModal();
+  }
+
+  const openEditSchedulerModal = (editScheduledId) => {
+    setEditScheduledId(editScheduledId);
+    modalEditScheduler.current.openModal();
+  }
+
   return (
     <div className="scheduler">
       <div className="scheduler-add">
-        <div 
+        <div
           className="scheduler-add-btn"
-          onClick={() => modalScheduler.current.openAddModal()}
+          onClick={() => openAddSchedulerModal()}
         >
           <FontAwesomeIcon icon={faPlus} className="fa-plus" />
         </div>
@@ -48,10 +59,10 @@ const Scheduler = () => {
 
             {scheduler.map((scheduledRoom) => {
               return (
-                <div 
-                  className="table-row" 
+                <div
+                  className="table-row"
                   key={scheduledRoom.scheduledId}
-                  onClick={() => modalScheduler.current.openEditModal(scheduledRoom.scheduledId)}
+                  onClick={() => openEditSchedulerModal(scheduledRoom.scheduledId)}
                 >
                   <div className="col col-1">{scheduledRoom.roomName}</div>
                   <div className="col col-2">{scheduledRoom.status}</div>
@@ -67,7 +78,18 @@ const Scheduler = () => {
         </div>
       </div>
 
-      <ModalScheduler ref={modalScheduler}/>
+      <ModalBase ref={modalAddScheduler}>
+        <ModalScheduler
+          closeModalScheduler={() => modalAddScheduler.current.closeModal()}
+        />
+      </ModalBase>
+
+      <ModalBase ref={modalEditScheduler}>
+        <ModalScheduler
+          scheduledId={editScheduledId}
+          closeModalScheduler={() => modalEditScheduler.current.closeModal()}
+        />
+      </ModalBase>
 
     </div>
   )

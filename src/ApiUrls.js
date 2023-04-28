@@ -6,7 +6,7 @@ const ApiUrls = {
     getExistedScheduler: '/placeholders/scheduler-edit-data.json'
   },
   rooms: {
-    getRooms: '/placeholders/rooms-data.json'
+    getHomeRooms: '/placeholders/home-rooms-data.json'
   },
   history: {
     getHistory: '/placeholders/history-data.json',

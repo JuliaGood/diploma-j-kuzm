@@ -2,7 +2,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { datePickerDateFormat, datePickerTimeFormat, datePickerTimeInterval } from '../../constants';
+import Constants from '../../Constants';
 import "./customDatePicker.style.css";
 
 const CustomDatePicker = ({ selectedDate, onDateChange, defaultValue }) => {
@@ -15,9 +15,9 @@ const CustomDatePicker = ({ selectedDate, onDateChange, defaultValue }) => {
         selected={selectedDate}
         onChange={(date) => onDateChange(date)}
         showTimeSelect
-        dateFormat={datePickerDateFormat}
-        timeFormat={datePickerTimeFormat}
-        timeIntervals={datePickerTimeInterval}
+        dateFormat={Constants.DATE_PICKER_DATE_FORMAT}
+        timeFormat={Constants.DATE_PICKER_TIME_FORMAT}
+        timeIntervals={Constants.DATE_PICKER_TIME_INTERVAL}
         onKeyDown={(e) => e.preventDefault()}
         onFocus={(e) => e.target.blur()}
       />
