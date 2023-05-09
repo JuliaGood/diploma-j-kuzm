@@ -1,0 +1,53 @@
+version: '3.1'
+
+services:
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    restart: unless-stopped
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - FAST_REFRESH=false
+      #- WDS_SOCKET_HOST=frontend
+      - WDS_SOCKET_PORT=3000
+    depends_on: 
+      - backend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - 3000:3000
+
+  backend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    restart: unless-stopped
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    depends_on:
+      - db
+    environment:
+       SERVER_PORT: 8080
+       DB_HOST: db
+       DB_PORT: 3306
+       DB_USER: root
+       DB_PASS: root
+    ports:
+      - 8080:8080
+
+  db:
+    image: mysql:8.0.33
+    command: --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    volumes:
+      #- ./backend/db/data:/var/lib/mysql
+      - ./backend/db/smart_light_db.sql:/docker-entrypoint-initdb.d/smart_light_db.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
