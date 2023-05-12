@@ -8,6 +8,7 @@ import Button from "../button/Button";
 import CustomSwitch from "../custom-switch/CustomSwitch";
 import CustomSlider from "../custom-slider/CustomSlider";
 import ApiUrls from '../../ApiUrls';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 class ModalScheduler extends Component {
   constructor(props) {
@@ -212,6 +213,7 @@ class ModalScheduler extends Component {
                 onSelectChange={this.onRoomSelectChange}
                 options={this.state.roomOptions}
                 selectedValue={this.findSelectedRoomOption(roomId)}
+                icon={faHome}
               />
             </div>
           </FieldGroup>

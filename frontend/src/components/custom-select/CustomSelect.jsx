@@ -1,6 +1,6 @@
 import Select, { components } from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import "./customSelect.style.css";
 
 const DropdownIndicator = (props) => {
@@ -18,7 +18,7 @@ const ValueContainer = ({ children, ...props }) => {
     components.ValueContainer && (
       <components.ValueContainer {...props}>
         {!!children && (
-           <FontAwesomeIcon icon={faHome} className="fa-input-icon" />
+           <FontAwesomeIcon icon={props.selectProps.icon} className="fa-input-icon" />
         )}
         {children}
       </components.ValueContainer>
@@ -26,13 +26,14 @@ const ValueContainer = ({ children, ...props }) => {
   );
 };
 
-const CustomSelect = ({ options, onSelectChange, selectedValue }) => {
+const CustomSelect = ({ options, onSelectChange, selectedValue, icon }) => {
   return (
     <Select
       onChange={onSelectChange}
       value={selectedValue}
       className="react-select-container"
       classNamePrefix="react-select"
+      icon={icon}
       components={{ DropdownIndicator, ValueContainer }}
       options={options}
     />

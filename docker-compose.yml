@@ -6,15 +6,13 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./frontend
-    restart: unless-stopped
+    restart: always
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
-      - FAST_REFRESH=false
-      #- WDS_SOCKET_HOST=frontend
-      - WDS_SOCKET_PORT=3000
-    depends_on: 
-      - backend
+      CHOKIDAR_USEPOLLING: 'true'
+      WATCHPACK_POLLING: 'true'
+      FAST_REFRESH: 'false'
+      #WDS_SOCKET_HOST: frontend
+      WDS_SOCKET_PORT: 3000
     volumes:
       - /app/node_modules
       - ./frontend:/app
@@ -25,7 +23,7 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./backend
-    restart: unless-stopped
+    restart: on-failure
     volumes:
       - /app/node_modules
       - ./backend:/app
@@ -37,6 +35,7 @@ services:
        DB_PORT: 3306
        DB_USER: root
        DB_PASS: root
+       TZ: America/Chicago
     ports:
       - 8080:8080
 
@@ -49,5 +48,6 @@ services:
       - ./backend/db/smart_light_db.sql:/docker-entrypoint-initdb.d/smart_light_db.sql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      TZ: America/Chicago
     ports:
       - 3306:3306

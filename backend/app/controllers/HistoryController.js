@@ -1,4 +1,4 @@
-var moment = require('moment');
+const moment = require('moment');
 
 const getHistory = (db) => (req, res) => {
   console.log('getHistory',req.body);

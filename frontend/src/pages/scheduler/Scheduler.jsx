@@ -1,7 +1,7 @@
 import "./scheduler.style.css";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPencil, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPencil } from '@fortawesome/free-solid-svg-icons';
 import ModalScheduler from "../../components/modal-scheduler/ModalScheduler";
 import ApiUrls from '../../ApiUrls';
 import ModalBase from "../../components/modal-base/ModalBase";
@@ -41,14 +41,6 @@ const Scheduler = () => {
       </div>
 
       <div className="scheduler-content">
-
-        {/* <div className="scheduler-content-empty">
-          <img src={calendarImg} alt="calendar" />
-          // <FontAwesomeIcon icon={faCalendar} className="fa-calendar" />
-          <p>Nothing in Scheduled</p>
-        </div> */}
-
-        <div className="scheduler-content-full">
           <div className="scheduler-table">
             <div className="table-header">
               <div className="col col-1">Room</div>
@@ -77,7 +69,7 @@ const Scheduler = () => {
             })}
 
           </div>
-        </div>
+        
       </div>
 
       <ModalBase ref={modalAddScheduler}>

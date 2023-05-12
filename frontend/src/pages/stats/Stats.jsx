@@ -1,51 +1,54 @@
-import "./history.style.css";
+import "./stats.style.css";
 import { useEffect, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCalendar, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import Button from "../../components/button/Button";
+import CustomSelect from "../../components/custom-select/CustomSelect";
 import FilterRoomDropdown from "../../components/filter-room-dropdown/FilterRoomDropdown";
 import FieldGroup from "../../components/field-group/FieldGroup";
-import CustomDatePicker from "../../components/custom-date-picker/CustomDatePicker";
 import FieldGroups from "../../components/field-groups/FieldGroups";
 import ApiUrls from '../../ApiUrls';
+import { BarChart } from "../../components/bar-chart/BarChart";
 
-const History = () => {
-  const [history, setHistory] = useState([]);
+const availablePeriods = [
+  { label: "Day", value: "day" },
+  { label: "Week", value: "week" },
+  { label: "Month", value: "month" },
+  { label: "Year", value: "year" },
+]
+
+const Stats = () => {
+  const [stats, setStats] = useState([]);
   const [selectedRooms, setSelectedRooms] = useState([]); // { roomId: boolean}
-  const [selectedFromDate, setSelectedFromDate] = useState(null); // date
-  const [selectedToDate, setSelectedToDate] = useState(null); // date
+  const [selectedPeriod, setSelectedPeriod] = useState(availablePeriods[3]);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [isRoomFilterOpen, setRoomFilterOpen] = useState(false);
 
-  const fetchHistory = () => {
-    fetch(ApiUrls.GET_HISTORY.url, {
-      method: ApiUrls.GET_HISTORY.method,
+  const fetchStats = () => {
+    fetch(ApiUrls.GET_STATS.url, {
+      method: ApiUrls.GET_STATS.method,
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         rooms: selectedRooms,
-        fromDate: selectedFromDate,
-        toDate: selectedToDate
-      }),
+        period: selectedPeriod.value
+      })
     })
       .then((res) => res.json())
-      .then((history) => setHistory(history))
+      .then((stats) => setStats(stats));
   }
 
   useEffect(() => {
-    fetchHistory();
+    fetchStats();
   }, []);
 
   useEffect(() => {
-    fetch(ApiUrls.GET_HISTORY_FILTERS.url)
+    fetch(ApiUrls.GET_STATS_FILTERS.url)
       .then(res => res.json())
       .then(filters => {
         setAvailableRooms(filters.rooms);
         setSelectedRooms(filters.rooms.map((room) => room.roomId));
-        setSelectedFromDate(new Date(filters.fromDate));
-        setSelectedToDate(new Date(filters.toDate));
       });
   }, []);
 
@@ -71,10 +74,6 @@ const History = () => {
     });
   }
 
-  const onFilterApplyClick = () => {
-    fetchHistory();
-  }
-
   const displaySelectedRooms = () => {
     const selectedRoomNames = availableRooms.filter((room) => {
       return findSelectedRoom(room.roomId);
@@ -91,11 +90,15 @@ const History = () => {
     return findSelectedRoom(roomId) !== undefined;
   }
 
+  const onFilterApplyClick = () => {
+    fetchStats();
+  }
+
   return (
-    <div className="history">
-      <div className="history-content">
+    <div className="stats">
+      <div className="stats-content">
         <FieldGroups>
-          <FieldGroup fieldName="Room">
+          <FieldGroup fieldName="Select Room">
             <div className="input">
               <FontAwesomeIcon icon={faHome} className="fa-input-icon" />
               <input
@@ -116,20 +119,13 @@ const History = () => {
             }
           </FieldGroup>
 
-          <FieldGroup fieldName="From date">
-            <div className="input" >
-              <CustomDatePicker
-                selectedDate={selectedFromDate}
-                onDateChange={(date) => setSelectedFromDate(date)}
-              />
-            </div>
-          </FieldGroup>
-
-          <FieldGroup fieldName="To date">
-            <div className="input">
-              <CustomDatePicker
-                selectedDate={selectedToDate}
-                onDateChange={(date) => setSelectedToDate(date)}
+          <FieldGroup fieldName="Select Period">
+            <div className="select">
+              <CustomSelect
+                onSelectChange={({ label, value }) => setSelectedPeriod({ label, value })}
+                options={availablePeriods}
+                selectedValue={selectedPeriod}
+                icon={faCalendar}
               />
             </div>
           </FieldGroup>
@@ -138,34 +134,17 @@ const History = () => {
             onButtonClick={() => onFilterApplyClick()}
             buttonName="apply"
           />
+
         </FieldGroups>
 
-        <div className="history-table">
-          <div className="table-header">
-            <div className="col col-1">Room</div>
-            <div className="col col-2">Status</div>
-            <div className="col col-3">Bright</div>
-            <div className="col col-4">Date</div>
-            <div className="col col-5">Time</div>
-          </div>
-
-          {history.map((historyRoom) => {
-            return (
-              <div className="table-row" key={historyRoom.historyId}>
-                <div className="col col-1">{historyRoom.roomName}</div>
-                <div className="col col-2">{historyRoom.lightStatus ? "On" : "Off"}</div>
-                <div className="col col-3 col-num">{historyRoom.brightRange}%</div>
-                <div className="col col-4 col-num">{historyRoom.date}</div>
-                <div className="col col-5 col-num">{historyRoom.time}</div>
-              </div>
-            )
-          })}
-
+        <div className="stats-chart">
+          <BarChart stats={stats} />
         </div>
 
       </div>
+
     </div>
   )
 }
 
-export default History;
+export default Stats;

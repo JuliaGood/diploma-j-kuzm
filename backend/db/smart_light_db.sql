@@ -12,9 +12,9 @@ CREATE TABLE `rooms` (
 
 INSERT INTO `rooms` 
 	VALUES (1,'Kitchen',1,74,14),
-		   (2,'Living room',1,49,26),
-		   (3,'Bathroom',1,86,25),
-		   (4,'Bedroom',1,40,27);
+		   (2,'Living room',1,49,27),
+		   (3,'Bathroom',1,86,26),
+		   (4,'Bedroom',1,40,25);
 
 CREATE TABLE `history` (
   `history_id` int NOT NULL AUTO_INCREMENT,

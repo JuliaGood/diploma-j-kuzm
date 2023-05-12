@@ -6,6 +6,7 @@ const cors = require('cors');
 const scheduleController = require('./controllers/ScheduleController');
 const roomController = require('./controllers/RoomController');
 const historyController = require('./controllers/HistoryController');
+const statsController = require('./controllers/StatsController');
 const schedulerService = require('./services/SchedulerService');
 const wsService = require('./services/WsService');
 const databaseService = require('./services/DatabaseService');
@@ -34,6 +35,8 @@ router.delete('/schedules/:scheduleId', scheduleController.deleteSchedule(db));
 router.post('/history', historyController.getHistory(db));
 router.get('/history/filters', historyController.getHistoryFilters(db));
 router.get('/rooms', roomController.getRooms(db));
+router.post('/stats', statsController.getStats(db));
+router.get('/stats/filters', statsController.getStatsFilters(db));
 
 // Create server
 const server = http.createServer(app);

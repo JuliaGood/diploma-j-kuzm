@@ -7,6 +7,7 @@ import Rooms from "./pages/rooms/Rooms";
 import Scheduler from "./pages/scheduler/Scheduler";
 import History from "./pages/history/History";
 import NoConnection from "./pages/no-connection/NoConnection";
+import Stats from "./pages/stats/Stats";
 
 const pages = {
   ROOMS: 1,
@@ -16,7 +17,7 @@ const pages = {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState(pages.ROOMS);
+  const [activeTab, setActiveTab] = useState(pages.STATS);
 
   const onTabClick = (pageId) => {
     setActiveTab(pageId);
@@ -31,7 +32,7 @@ function App() {
       case pages.HISTORY: 
         return <History />;
       case pages.STATS: 
-        return <NoConnection />;
+        return <Stats />;
       default:
         return <NoConnection />;
     }

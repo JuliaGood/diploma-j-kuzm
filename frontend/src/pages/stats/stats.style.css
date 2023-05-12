@@ -1,0 +1,8 @@
+.stats .stats-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats .stats-chart {
+  margin-bottom: 35px;
+}
