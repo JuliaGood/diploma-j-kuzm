@@ -1,7 +1,7 @@
 import "./stats.style.css";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faCalendar, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCalendar, faLayerGroup, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import Button from "../../components/button/Button";
 import CustomSelect from "../../components/custom-select/CustomSelect";
 import FilterRoomDropdown from "../../components/filter-room-dropdown/FilterRoomDropdown";
@@ -17,10 +17,18 @@ const availablePeriods = [
   { label: "Year", value: "year" },
 ]
 
+const availableDimensions = [
+  { label: "Hours of day", value: "hoursOfDay" },
+  { label: "Days of week", value: "daysOfWeek" }, 
+  { label: "Days of month", value: "daysOfMonth" },
+  { label: "Months of year", value: "monthsOfYear" },
+]
+
 const Stats = () => {
   const [stats, setStats] = useState([]);
   const [selectedRooms, setSelectedRooms] = useState([]); // { roomId: boolean}
   const [selectedPeriod, setSelectedPeriod] = useState(availablePeriods[3]);
+  const [selectedDimension, setSelectedDimension] = useState(availableDimensions[3]);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [isRoomFilterOpen, setRoomFilterOpen] = useState(false);
 
@@ -32,7 +40,8 @@ const Stats = () => {
       },
       body: JSON.stringify({
         rooms: selectedRooms,
-        period: selectedPeriod.value
+        period: selectedPeriod.value,
+        dimension: selectedDimension.value
       })
     })
       .then((res) => res.json())
@@ -130,6 +139,17 @@ const Stats = () => {
             </div>
           </FieldGroup>
 
+          <FieldGroup fieldName="Select Dimension">
+            <div className="select">
+              <CustomSelect
+                onSelectChange={({ label, value }) => setSelectedDimension({ label, value })}
+                options={availableDimensions}
+                selectedValue={selectedDimension}
+                icon={faLayerGroup}
+              />
+            </div>
+          </FieldGroup>
+      
           <Button
             onButtonClick={() => onFilterApplyClick()}
             buttonName="apply"

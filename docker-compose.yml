@@ -44,7 +44,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: on-failure
     volumes:
-      #- ./backend/db/data:/var/lib/mysql
+      - ./backend/db/data:/var/lib/mysql
       - ./backend/db/smart_light_db.sql:/docker-entrypoint-initdb.d/smart_light_db.sql
     environment:
       MYSQL_ROOT_PASSWORD: root

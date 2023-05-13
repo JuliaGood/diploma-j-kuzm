@@ -3,8 +3,8 @@ const moment = require('moment');
 const getStats = (db) => (req, res) => {
   console.log('getStats', req.body);
 
-  const { rooms, period } = req.body;
-  const dimensionFormat = getDimensionFormat(period);
+  const { rooms, period, dimension } = req.body;
+  const dimensionFormat = getDimensionFormat(dimension);
 
   db('history')
     .select(
@@ -47,7 +47,7 @@ const getStats = (db) => (req, res) => {
         });
 
         return res.send({
-          labels: getLabels(period),
+          labels: getLabels(dimension),
           data: statsByRoomName
         });
       }
@@ -78,29 +78,29 @@ const getStatsFilters = (db) => async (req, res) => {
   });
 };
 
-const getLabels = (period) => {
-  switch (period) {
-    case 'day':
+const getLabels = (dimension) => {
+  switch (dimension) {
+    case 'hoursOfDay':
       return ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
-    case 'week':
+    case 'daysOfWeek':
       return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    case 'month':
+    case 'daysOfMonth':
       return getDayRangeForCurrentMonth();
-    case 'year':
+    case 'monthsOfYear':
       return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   }
 }
 
-const getDimensionFormat = (period) => {
-  switch (period) {
-    case 'day':
-      return '%H:%i';
-    case 'week':
-      return '%a';
-    case 'month':
-      return '%e';
-    case 'year':
-      return '%b';
+const getDimensionFormat = (dimension) => {
+  switch (dimension) {
+    case 'hoursOfDay':
+      return '%H:00'; // 7:00, 8:00 ...
+    case 'daysOfWeek':
+      return '%a'; // Mon, Tue, Wed ...
+    case 'daysOfMonth':
+      return '%e'; // 1, 2, 3, ... 31
+    case 'monthsOfYear':
+      return '%b'; // Jan, Feb, Mar ...
   }
 }
 
@@ -120,7 +120,7 @@ const getDayRangeForCurrentMonth = () => {
   const days = [];
 
   for (let i = 1; i <= lastDayOfMonth; i++) {
-    days.push(new String(i));
+    days.push(String(i));
   }
 
   return days;

@@ -9,7 +9,6 @@ import {
   Legend
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import faker from "faker";
 
 ChartJS.register(
   CategoryScale,
@@ -56,47 +55,16 @@ export const options = {
 };
 
 const backgroundColors = [
-  "rgba(255, 99, 132)",
-  "rgba(53, 162, 235)",
-  "rgba(139, 195, 74)",
-  "rgba(255, 193, 7)",
+  "rgba(255, 193, 7)", // yellow - Kitchen #1
+  "rgba(139, 195, 74)", // green - Living room #2  
+  "rgba(53, 162, 235)", // blue - Bathroom  #3
+  "rgba(255, 99, 132)", // pink (purple) - Bedroom #4
 ]
-
-// export const data = {
-//   labels,
-//   datasets: [
-//     {
-//       label: "Dataset 1",
-//       data: labels.map(() => faker.datatype.number({ min: 0, max: 5000 })),
-//       backgroundColor: "rgba(255, 99, 132)"
-//     },
-//     {
-//       label: "Dataset 2",
-//       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-//       backgroundColor: "rgba(53, 162, 235)"
-//     },
-//     {
-//       label: "Dataset 3",
-//       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-//       backgroundColor: "rgba(139, 195, 74)"
-//     },
-//     {
-//       label: "Dataset 4",
-//       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-//       backgroundColor: "rgba(255, 193, 7)"
-//     }
-//   ]
-// };
 
 export function BarChart({ stats }) {
   if (!stats.data) {
     return <div>Loading...</div>;
   }
-
-  // const chartData = stats.labels.map((label) => {
-  //   const matchingData = stats.data.find((data) => data.x === label);
-  //   return matchingData ? matchingData.y : 0;
-  // });
 
   const datasets = Object.entries(stats.data)
     .map(([roomName, values], index) => {
