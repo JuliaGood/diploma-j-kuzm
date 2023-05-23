@@ -25,7 +25,6 @@ const runWsServer = (server, db) => {
               bulbPin: room.bulb_pin,
               roomName: room.room_name,
               lightStatus: Boolean(room.light_status),
-              brightRange: room.bright_range
             };
           });
 
@@ -45,7 +44,7 @@ const runWsServer = (server, db) => {
 }
 
 const notifyAll = (db, data) => {
-  const { roomId, bulbPin, roomName, lightStatus, brightRange } = data;
+  const { roomId, bulbPin, roomName, lightStatus } = data;
 
   Array.from(wsClients.entries()).forEach(([wsClientId, wsClient]) => {
     if (data.wsClientId && data.wsClientId === wsClientId) {
@@ -57,7 +56,6 @@ const notifyAll = (db, data) => {
       bulbPin: bulbPin,
       roomName: roomName,
       lightStatus: lightStatus,
-      brightRange: brightRange
     }));
   });
 
@@ -66,7 +64,7 @@ const notifyAll = (db, data) => {
 }
 
 const updateRoom = (db, data) => {
-  const { roomId, lightStatus, brightRange } = data;
+  const { roomId, lightStatus } = data;
   console.log('updateRoom', data);
 
   //if (isNotNull(roomId) && isNotNull(lightStatus) && isNotNull(brightRange)) {
@@ -74,7 +72,6 @@ const updateRoom = (db, data) => {
       .where('room_id', '=', roomId)
       .update({
         light_status: lightStatus,
-        bright_range: brightRange,
       })
       .then(() => {
         console.log(`Room id ${roomId} has been updated: %s`, data);

@@ -144,9 +144,8 @@ const History = () => {
           <div className="table-header">
             <div className="col col-1">Room</div>
             <div className="col col-2">Status</div>
-            <div className="col col-3">Bright</div>
-            <div className="col col-4">Date</div>
-            <div className="col col-5">Time</div>
+            <div className="col col-3">Date</div>
+            <div className="col col-4">Time</div>
           </div>
 
           {history.map((historyRoom) => {
@@ -154,9 +153,8 @@ const History = () => {
               <div className="table-row" key={historyRoom.historyId}>
                 <div className="col col-1">{historyRoom.roomName}</div>
                 <div className="col col-2">{historyRoom.lightStatus ? "On" : "Off"}</div>
-                <div className="col col-3 col-num">{historyRoom.brightRange}%</div>
-                <div className="col col-4 col-num">{historyRoom.date}</div>
-                <div className="col col-5 col-num">{historyRoom.time}</div>
+                <div className="col col-3 col-num">{historyRoom.date}</div>
+                <div className="col col-4 col-num">{historyRoom.time}</div>
               </div>
             )
           })}

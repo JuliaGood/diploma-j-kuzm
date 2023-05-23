@@ -11,7 +11,6 @@ const getSchedules = (db) => (req, res) => {
       'scheduler.schedule_id',
       'scheduler.room_id',
       'scheduler.light_status',
-      'scheduler.bright_range',
       'scheduler.scheduled_time',
       'rooms.room_name'
     )
@@ -26,7 +25,6 @@ const getSchedules = (db) => (req, res) => {
             scheduleId: schedule.schedule_id,
             roomName: schedule.room_name,
             lightStatus: schedule.light_status,
-            brightRange: schedule.bright_range,
             date: moment(schedule.scheduled_time).format('DD.MM.YYYY'),
             time: moment(schedule.scheduled_time).format('HH:mm'),
           };
@@ -54,7 +52,6 @@ const getSchedule = (db) => (req, res) => {
       'scheduler.schedule_id',
       'scheduler.room_id',
       'scheduler.light_status',
-      'scheduler.bright_range',
       'scheduler.scheduled_time',
       'rooms.room_name'
     )
@@ -67,7 +64,6 @@ const getSchedule = (db) => (req, res) => {
           roomId: schedule.room_id,
           roomName: schedule.room_name,
           lightStatus: schedule.light_status,
-          brightRange: schedule.bright_range,
           scheduledTime: new Date(schedule.scheduled_time)
         });
 
@@ -80,14 +76,13 @@ const getSchedule = (db) => (req, res) => {
 const addSchedule = (db) => (req, res) => {
   console.log('addSchedule', req.body);
   
-  const { roomId, lightStatus, brightRange, scheduledTime } = req.body;
+  const { roomId, lightStatus, scheduledTime } = req.body;
 
   const scheduledFormatedTime = moment(scheduledTime).format('YYYY-MM-DD HH:mm:ss');
 
   db('scheduler').insert({
     room_id: roomId,
     light_status: lightStatus,
-    bright_range: brightRange,
     scheduled_time: scheduledFormatedTime,
     status: scheduleStatus.SCHEDULED
   })
@@ -101,7 +96,6 @@ const addSchedule = (db) => (req, res) => {
           schedule_id: scheduleId,
           room_id: roomId,
           light_status: lightStatus,
-          bright_range: brightRange,
           scheduled_time: scheduledFormatedTime,
         });
 
@@ -115,7 +109,7 @@ const addSchedule = (db) => (req, res) => {
 const editSchedule = (db) => (req, res) => {
   console.log('editSchedule', req.body);
 
-  const { roomId, lightStatus, brightRange, scheduledTime } = req.body;
+  const { roomId, lightStatus, scheduledTime } = req.body;
   const scheduleId = parseInt(req.params['scheduleId']);
 
   if (!scheduleId || !isNumeric(scheduleId)) {
@@ -132,7 +126,6 @@ const editSchedule = (db) => (req, res) => {
     .update({
       room_id: roomId,
       light_status: lightStatus,
-      bright_range:  brightRange,
       scheduled_time: scheduledFormatedTime
     })
     .then((results) => {
@@ -144,7 +137,6 @@ const editSchedule = (db) => (req, res) => {
           schedule_id: scheduleId,
           room_id: roomId,
           light_status: lightStatus,
-          bright_range: brightRange,
           scheduled_time: scheduledFormatedTime,
         });
         

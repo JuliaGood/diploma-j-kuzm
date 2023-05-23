@@ -45,10 +45,9 @@ const Scheduler = () => {
             <div className="table-header">
               <div className="col col-1">Room</div>
               <div className="col col-2">Status</div>
-              <div className="col col-3">Bright</div>
-              <div className="col col-4">Date</div>
-              <div className="col col-5">Time</div>
-              <div className="col col-6"></div>
+              <div className="col col-3">Date</div>
+              <div className="col col-4">Time</div>
+              <div className="col col-5"></div>
             </div>
 
             {scheduler.map((scheduledRoom) => {
@@ -60,10 +59,9 @@ const Scheduler = () => {
                 >
                   <div className="col col-1">{scheduledRoom.roomName}</div>
                   <div className="col col-2">{scheduledRoom.lightStatus ? "On" : "Off"}</div>
-                  <div className="col col-3 col-num">{scheduledRoom.brightRange}%</div>
-                  <div className="col col-4 col-num">{scheduledRoom.date}</div>
-                  <div className="col col-5 col-num">{scheduledRoom.time}</div>
-                  <div className="col col-6 col-num"><FontAwesomeIcon icon={faPencil} className="fa-pencil" /></div>
+                  <div className="col col-3 col-num">{scheduledRoom.date}</div>
+                  <div className="col col-4 col-num">{scheduledRoom.time}</div>
+                  <div className="col col-5 col-num"><FontAwesomeIcon icon={faPencil} className="fa-pencil" /></div>
                 </div>
               )
             })}

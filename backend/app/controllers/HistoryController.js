@@ -11,7 +11,6 @@ const getHistory = (db) => (req, res) => {
       'history.history_id',
       'history.room_id',
       'history.light_status',
-      'history.bright_range',
       'history.scheduled_time',
       'rooms.room_name'
     )
@@ -35,7 +34,6 @@ const getHistory = (db) => (req, res) => {
             roomId: history.roomId,
             roomName: history.room_name,
             lightStatus: history.light_status,
-            brightRange: history.bright_range,
             date: moment(history.scheduled_time).format('DD.MM.YYYY'),
             time: moment(history.scheduled_time).format('HH:mm'),
           };

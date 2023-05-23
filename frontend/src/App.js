@@ -17,7 +17,7 @@ const pages = {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState(pages.STATS);
+  const [activeTab, setActiveTab] = useState(pages.ROOMS);
 
   const onTabClick = (pageId) => {
     setActiveTab(pageId);

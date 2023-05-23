@@ -71,9 +71,6 @@
   width: 100%;
   background-color: #ffffff17;
 }
-/* .tabs ul li.active .fa-icon {
-  color: #ff7800;
-} */
 
 .tabs .tab-content {
   position: relative;
@@ -91,5 +88,4 @@
   margin: 0 auto;
   margin-bottom: 5px;
   font-size: 12px;
-
 }

@@ -39,19 +39,16 @@
   margin-right: 10px;
 }
 .history-table .col-1 { /*room*/
-  flex-basis: 26%;
+  flex-basis: 31%;
 }
 .history-table .col-2 { /*status*/
-  flex-basis: 18%;
+  flex-basis: 21%;
 }
-.history-table .col-3 { /*bright*/
-  flex-basis: 18%;
+.history-table .col-3 { /*date*/
+  flex-basis: 31%;
 }
-.history-table .col-4 { /*date*/
-  flex-basis: 26%;
-}
-.history-table .col-5 { /*time*/
-  flex-basis: 12%;
+.history-table .col-4 { /*time*/
+  flex-basis: 17%;
 }
 
 .history-table .col-num {

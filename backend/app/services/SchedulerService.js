@@ -35,7 +35,6 @@ const scheduleCronJob = (db, schedule) => {
       .join('rooms', 'rooms.room_id', '=', 'scheduler.room_id')
       .select(
         'scheduler.light_status',
-        'scheduler.bright_range',
         'rooms.room_id',
         'rooms.room_name',
         'rooms.bulb_pin'
@@ -50,7 +49,6 @@ const scheduleCronJob = (db, schedule) => {
             bulbPin: schedule.bulb_pin,
             roomName: schedule.room_name,
             lightStatus: schedule.light_status,
-            brightRange: schedule.bright_range
           });
         }
       });
@@ -93,7 +91,6 @@ const saveSheduleToHistory = (db, schedule) => {
   db('history').insert({
     room_id: schedule.room_id,
     light_status: schedule.light_status,
-    bright_range: schedule.bright_range,
     scheduled_time: schedule.scheduled_time
   })
     .then(() => {

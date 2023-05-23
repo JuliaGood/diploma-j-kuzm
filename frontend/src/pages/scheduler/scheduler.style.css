@@ -66,22 +66,19 @@
   margin-right: 10px;
 }
 .scheduler-table .col-1 { /*room*/
-  flex-basis: 25%;
+  flex-basis: 29%;
 }
 .scheduler-table .col-2 { /*status*/
-  flex-basis: 17%;
+  flex-basis: 21%;
 }
-.scheduler-table .col-3 { /*bright*/
-  flex-basis: 17%;
+.scheduler-table .col-3 { /*date*/
+  flex-basis: 29%;
 }
-.scheduler-table .col-4 { /*date*/
-  flex-basis: 24%;
+.scheduler-table .col-4 { /*time*/
+  flex-basis: 16%;
 }
-.scheduler-table .col-5 { /*time*/
-  flex-basis: 12%;
-}
-.scheduler-table .col-6 { /*edit*/
-  flex-basis: 5%;
+.scheduler-table .col-5 { /*edit*/
+  flex-basis: 6%;
   text-align: right;
   transition: all .3s ease-in-out;
 }
@@ -90,13 +87,13 @@
   font-size: 14px;
 }
 
-.scheduler-table .col-6 svg {
+.scheduler-table .col-5 svg {
   transition: all .3s ease-in-out;
 }
 
-.scheduler-table .col-6 svg:hover, 
-.scheduler-table .col-6 svg:focus, 
-.scheduler-table .col-6 svg:active {
+.scheduler-table .col-5 svg:hover, 
+.scheduler-table .col-5 svg:focus, 
+.scheduler-table .col-5 svg:active {
   transform: scale(1.03);
   color: #ff7800;
 }

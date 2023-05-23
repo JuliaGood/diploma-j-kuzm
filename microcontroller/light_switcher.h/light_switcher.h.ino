@@ -55,16 +55,11 @@ void handleWebSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
 void updateBulb(JsonObject data) {
   int bulbPin = data["bulbPin"].as<int>();
   int lightStatus = data["lightStatus"].as<int>();
-  int brightRange = data["brightRange"].as<int>();
 
   if (bulbPin > 0) {
     pinMode(bulbPin, OUTPUT);
     Serial.print("bulbPin: ");
     Serial.println(bulbPin);
-
-    //analogWrite(bulbPin, map(brightRange, 0, 100, 0, 255));
-    //Serial.print("brightRange: ");
-    //Serial.println(brightRange);
 
     digitalWrite(bulbPin, lightStatus ? LOW : HIGH);
     Serial.print("lightStatus: ");

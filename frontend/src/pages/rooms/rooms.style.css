@@ -1,22 +1,22 @@
-.rooms {
-}
 .room {
   background-color: #ffffff27;
   display: flex;
   flex-flow: column;
-  margin: 15px 0;
-  padding: 15px 20px;
+  margin: 25px 0;
+  padding: 35px 25px;
   border-radius: 10px;
 }
 
 .room-status {
   display: flex;
+  align-items: center;
 }
 
 .fa-lightbulb {
   color: #ff7800;
+  /* color: #643104; */
   margin-right: 10px;
-  font-size: 22px;
+  font-size: 25px;
   transition: color .3s ease-in-out;
 }
 
@@ -27,13 +27,4 @@
 
 .room-switch {
   margin-left: auto;
-}
-
-.room-bright .room-bright-percent {
-  font-size: 14px;
-  color: white;
-}
-
-.room-room-bright .room-slider {
-  
 }

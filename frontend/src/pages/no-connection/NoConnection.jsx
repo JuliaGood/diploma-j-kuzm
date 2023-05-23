@@ -1,6 +1,6 @@
 import "./noConnection.style.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe, faPlug /** faGrav  */  } from '@fortawesome/free-solid-svg-icons';
+import { faPlug } from '@fortawesome/free-solid-svg-icons';
 
 const NoConnection = () => {
 

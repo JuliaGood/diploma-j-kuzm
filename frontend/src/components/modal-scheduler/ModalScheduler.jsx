@@ -6,7 +6,6 @@ import CustomDatePicker from "../custom-date-picker/CustomDatePicker";
 import CustomSelect from "../custom-select/CustomSelect";
 import Button from "../button/Button";
 import CustomSwitch from "../custom-switch/CustomSwitch";
-import CustomSlider from "../custom-slider/CustomSlider";
 import ApiUrls from '../../ApiUrls';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,7 +17,6 @@ class ModalScheduler extends Component {
         roomId: null,
         scheduledTime: null,
         lightStatus: true,
-        brightRange: [100]
       },
       roomOptions: [],
       hasScheduledTimeError: false,
@@ -55,23 +53,13 @@ class ModalScheduler extends Component {
     });
   }
 
-  onBrightRangeChange = (value) => {
-    this.setState((prevState) => {
-      return {
-        ...prevState, scheduledRoom: {
-          ...prevState.scheduledRoom, brightRange: value
-        }
-      }
-    });
-  }
-
   isEditMode = () => {
     return this.props.scheduleId !== null
       && this.props.scheduleId !== undefined;
   }
 
   onSaveClick = () => {
-    const { roomId, scheduledTime, lightStatus, brightRange } = this.state.scheduledRoom;
+    const { roomId, scheduledTime, lightStatus } = this.state.scheduledRoom;
 
     // validate 
     if (!scheduledTime) {
@@ -83,11 +71,9 @@ class ModalScheduler extends Component {
       roomId: roomId,
       scheduledTime: scheduledTime,
       lightStatus: lightStatus,
-      brightRange: brightRange[0]
     }
 
     if (this.isEditMode()) {
-      console.log("brightRange request", brightRange);
       fetch(ApiUrls.EDIT_SCHEDULE.url(this.props.scheduleId), {
         method: ApiUrls.EDIT_SCHEDULE.method,
         headers: {
@@ -149,7 +135,6 @@ class ModalScheduler extends Component {
             roomId: data.roomId,
             scheduledTime: new Date(data.scheduledTime),
             lightStatus: data.lightStatus,
-            brightRange: [data.brightRange]
           }
         })
       });
@@ -200,7 +185,7 @@ class ModalScheduler extends Component {
   };
 
   render() {
-    const { roomId, scheduledTime, lightStatus, brightRange } = this.state.scheduledRoom;
+    const { roomId, scheduledTime, lightStatus } = this.state.scheduledRoom;
 
     return (
       <div className="modal-scheduler">
@@ -235,16 +220,6 @@ class ModalScheduler extends Component {
                 switchStatus={lightStatus}
               />
             </div>
-          </FieldGroup>
-
-          <FieldGroup fieldName="Light Brightness">
-            <div className="slider">
-              <CustomSlider
-                onSliderChange={this.onBrightRangeChange}
-                brightRange={brightRange}
-              />
-            </div>
-            <p className="bright-range-percent">{brightRange}%</p>
           </FieldGroup>
 
           <Button
