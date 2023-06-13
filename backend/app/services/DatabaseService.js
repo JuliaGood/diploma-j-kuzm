@@ -2,7 +2,7 @@ const constants = require('../constants');
 const knex = require('knex');
 
 const createConnection = () => {
-  return knex({
+  const knexInstaince = knex({
     client: 'mysql',
     connection: {
       host: constants.dbHost,
@@ -12,6 +12,12 @@ const createConnection = () => {
       database: constants.dbName
     }
   });
+
+  knexInstaince.on('start', (builder) => {
+    console.log(builder.toQuery());
+  });
+
+  return knexInstaince;
 }
 
 module.exports = {

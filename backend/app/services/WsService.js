@@ -67,7 +67,6 @@ const updateRoom = (db, data) => {
   const { roomId, lightStatus } = data;
   console.log('updateRoom', data);
 
-  //if (isNotNull(roomId) && isNotNull(lightStatus) && isNotNull(brightRange)) {
     db('rooms')
       .where('room_id', '=', roomId)
       .update({
@@ -76,7 +75,6 @@ const updateRoom = (db, data) => {
       .then(() => {
         console.log(`Room id ${roomId} has been updated: %s`, data);
       });
-  //}
 }
 
 module.exports = {

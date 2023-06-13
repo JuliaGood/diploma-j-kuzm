@@ -13,7 +13,8 @@ const getStats = (db) => (req, res) => {
       db.raw('SUM(TIMESTAMPDIFF(MINUTE, scheduled_time, next_time)) AS totalTime')
     )
     .from(function () {
-      this.select('rooms.room_name', 'h.scheduled_time', 'h.light_status', db.raw('(SELECT MIN(scheduled_time) FROM history WHERE scheduled_time > h.scheduled_time AND light_status != h.light_status) AS next_time'))
+      this.select('rooms.room_name', 'h.scheduled_time', 'h.light_status', 
+        db.raw('(SELECT MIN(scheduled_time) FROM history WHERE scheduled_time > h.scheduled_time AND room_id = h.room_id AND light_status != h.light_status) AS next_time'))
         .from('history AS h')
         .innerJoin('rooms', 'rooms.room_id', '=', 'h.room_id')
         .where('h.light_status', true)
